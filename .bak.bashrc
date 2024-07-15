@@ -112,7 +112,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# SL: Custom function for creating setup files
 function setup-file() {
     touch setup-$1.sh && chmod +x setup-$1.sh && code setup-$1.sh
 }
 
+# SL: Additions
+/home/samrlarsen/github/samlarsen1/chromebook-setup/setup-cron.sh >/dev/null 2>&1
+PS1='\W: '
