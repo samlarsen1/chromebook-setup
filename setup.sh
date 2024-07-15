@@ -14,8 +14,8 @@ if ! test -f ~/.ssh/$keyname; then
   ssh-keygen -t ed25519 -C "$email" -f ~/.ssh/$keyname
   echo "new public key ~/.ssh/$keyname below ..."
   cat ~/.ssh/$keyname.pub
-  ssh-add ~/.ssh/$keyname
 fi
+ssh-add ~/.ssh/$keyname
 echo "~/.ssh/$keyname"
 
 ./setup-ansible.sh
