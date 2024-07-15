@@ -3,7 +3,11 @@
 
 # Config Setup
 
-This setup script 
+This setup script adds main dependencies to a local linux setup for development
+
+## Github setup
+
+Generate an ssh key and store in `/.ssh/github`
 
 ## Ansible configuration
 
