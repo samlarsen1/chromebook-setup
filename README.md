@@ -5,9 +5,12 @@
 
 This setup script adds main dependencies to a local linux setup for development
 
-## Github setup
+## Running the scripts
 
-Generate an ssh key and store in `/.ssh/github`
+* Run `cp ./variables.env.sample > ./variables.env` and add your email address
+* Run `./setup.sh` which triggers ansible scripts for setup
+* Toggle environment variables to install different apps
+
 
 ## Ansible configuration
 
