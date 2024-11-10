@@ -1,0 +1,37 @@
+---
+- name: Install Node.js and npm
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure curl is installed
+      ansible.builtin.apt:
+        name: curl
+        state: present
+        update_cache: yes
+
+    - name: Add NodeSource APT repository
+      ansible.builtin.shell: curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      args:
+        warn: false
+
+    - name: Install Node.js and npm
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+        update_cache: yes
+
+    - name: Verify Node.js installation
+      ansible.builtin.command: node -v
+      register: node_version
+
+    - name: Verify npm installation
+      ansible.builtin.command: npm -v
+      register: npm_version
+
+    - name: Display Node.js version
+      ansible.builtin.debug:
+        msg: "Node.js version: {{ node_version.stdout }}"
+
+    - name: Display npm version
+      ansible.builtin.debug:
+        msg: "npm version: {{ npm_version.stdout }}"

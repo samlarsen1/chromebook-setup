@@ -1,0 +1,19 @@
+- name: Install IntelliJ IDEA Community Edition
+  hosts: all
+  become: yes
+  tasks:
+    - name: Add the JetBrains repository
+      apt_repository:
+        repo: ppa:deadsnakes/ppa
+        state: present
+        update_cache: yes
+
+    - name: Install default JDK
+      apt:
+        name: default-jdk
+        state: present
+
+    - name: Install IntelliJ IDEA Community Edition
+      apt:
+        name: intellij-idea-community
+        state: present

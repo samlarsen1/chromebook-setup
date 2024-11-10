@@ -6,5 +6,10 @@ if ! command -v ansible &> /dev/null; then
     exit 1
 fi
 
-# Now, call the Ansible playbook
-ansible-playbook -i hosts install-vscode.yml
+# Now, call the Ansible playbooks
+ansible-playbook -i hosts ./playbooks/install-basics.yml
+
+[ "$INSTALL_NPM"      = true ] && ansible-playbook -i hosts ./playbooks/install-npm.yml
+[ "$INSTALL_VSCODE"   = true ] && ansible-playbook -i hosts ./playbooks/install-vscode.yml
+[ "$INSTALL_INTELLIJ" = true ] && ansible-playbook -i hosts ./playbooks/install-java.yml 
+[ "$INSTALL_INTELLIJ" = true ] && ansible-playbook -i hosts ./playbooks/install-intellij.yml
