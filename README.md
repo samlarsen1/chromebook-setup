@@ -3,7 +3,9 @@
 
 # Config Setup
 
-This setup script adds main dependencies to a local linux setup for development
+This setup script adds main dependencies to a local linux setup for development.
+
+This repo will set up ansible and then use it to install common dev tooling for a chromebook such as java, node, npm, intellij & vscode.
 
 ## Running the scripts
 
