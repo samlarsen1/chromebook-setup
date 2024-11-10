@@ -20,3 +20,4 @@ echo "~/.ssh/$keyname"
 
 ./setup-ansible.sh
 ./setup-npm.sh
+./install-apps.sh

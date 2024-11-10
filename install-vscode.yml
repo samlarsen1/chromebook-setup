@@ -1,0 +1,27 @@
+
+- name: Install VS Code
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Add the Microsoft repo key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+
+    - name: Add the Microsoft repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+        state: present
+
+    - name: Update the package lists
+      apt:
+        update_cache: yes
+
+    - name: Install VS Code
+      apt:
+        name: code
+        state: present
+
+
+
+
