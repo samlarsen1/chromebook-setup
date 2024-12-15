@@ -2,15 +2,20 @@
   hosts: all
   become: yes
   tasks:
-    - name: Install pip for Python 3
+    - name: Install dependencies
       ansible.builtin.apt:
-        name: python3-pip
+        name:
+          - software-properties-common
         state: present
         update_cache: yes
 
-    - name: Install Python 3 venv
+    - name: Update package lists
       ansible.builtin.apt:
-        name: python3-venv
+        update_cache: yes
+
+    - name: Install pip for Python 3
+      ansible.builtin.apt:
+        name: python3-pip
         state: present
 
     - name: Verify pip installation

@@ -17,6 +17,7 @@ declare -A playbooks=(
     ["INSTALL_GCLOUD"]="install-gcloud.yml"
     ["INSTALL_TERRAFORM"]="install-terraform.yml"
     ["INSTALL_PIP"]="install-pip.yml"
+    ["INSTALL_PYTHON3_10"]="install-python3.10.yml"
 )
 
 for var in "${!playbooks[@]}"; do

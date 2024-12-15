@@ -1,0 +1,66 @@
+- name: Install Python 3.10 from source
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - libssl-dev
+          - zlib1g-dev
+          - libncurses5-dev
+          - libncursesw5-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - libgdbm-dev
+          - libdb5.3-dev
+          - libbz2-dev
+          - libexpat1-dev
+          - liblzma-dev
+          - tk-dev
+          - libffi-dev
+          - wget
+        state: present
+        update_cache: yes
+
+    - name: Download Python 3.10 source
+      ansible.builtin.get_url:
+        url: https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+        dest: /tmp/Python-3.10.0.tgz
+
+    - name: Extract Python 3.10 source
+      ansible.builtin.unarchive:
+        src: /tmp/Python-3.10.0.tgz
+        dest: /tmp
+        remote_src: yes
+
+    - name: Configure Python 3.10
+      ansible.builtin.shell: ./configure --enable-optimizations
+      args:
+        chdir: /tmp/Python-3.10.0
+
+    - name: Build and install Python 3.10
+      ansible.builtin.shell: make altinstall
+      args:
+        chdir: /tmp/Python-3.10.0
+
+    - name: Verify Python 3.10 installation
+      ansible.builtin.command: python3.10 --version
+      register: python_version
+
+    - name: Display Python 3.10 version
+      ansible.builtin.debug:
+        msg: "Python 3.10 version: {{ python_version.stdout }}"
+
+    - name: Install pip for Python 3
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+
+    - name: Verify pip installation
+      ansible.builtin.command: pip3 --version
+      register: pip_version
+
+    - name: Display pip version
+      ansible.builtin.debug:
+        msg: "pip version: {{ pip_version.stdout }}"
