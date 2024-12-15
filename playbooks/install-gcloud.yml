@@ -1,0 +1,24 @@
+---
+- name: Install Google Cloud SDK
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Add Google Cloud public key
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
+
+    - name: Add Google Cloud SDK repository
+      apt_repository:
+        repo: "deb http://packages.cloud.google.com/apt cloud-sdk main"
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Google Cloud SDK
+      apt:
+        name: google-cloud-sdk
+        state: present
