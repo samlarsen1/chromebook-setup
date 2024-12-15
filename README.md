@@ -13,6 +13,8 @@ The script currently can install:
 - intellij
 - npm
 - vscode
+- pip
+- terraform
 
 ## Running the scripts
 
