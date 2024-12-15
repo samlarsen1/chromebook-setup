@@ -1,4 +1,4 @@
-- name: Install pip
+- name: Install pip and Python venv
   hosts: all
   become: yes
   tasks:
@@ -7,6 +7,11 @@
         name: python3-pip
         state: present
         update_cache: yes
+
+    - name: Install Python 3 venv
+      ansible.builtin.apt:
+        name: python3-venv
+        state: present
 
     - name: Verify pip installation
       ansible.builtin.command: pip3 --version
