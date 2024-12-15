@@ -11,6 +11,6 @@ ansible-playbook -i hosts ./playbooks/install-basics.yml
 
 [ "$INSTALL_NPM"      = true ] && ansible-playbook -i hosts ./playbooks/install-npm.yml
 [ "$INSTALL_VSCODE"   = true ] && ansible-playbook -i hosts ./playbooks/install-vscode.yml
-[ "$INSTALL_JAVA"     = true ] && ansible-playbook -i hosts ./playbooks/install-java.yml 
+[ "$INSTALL_SDKMAN"   = true ] && ansible-playbook -i hosts ./playbooks/install-sdkman.yml
 [ "$INSTALL_INTELLIJ" = true ] && ansible-playbook -i hosts ./playbooks/install-intellij.yml
 [ "$INSTALL_GCLOUD"   = true ] && ansible-playbook -i hosts ./playbooks/install-gcloud.yml

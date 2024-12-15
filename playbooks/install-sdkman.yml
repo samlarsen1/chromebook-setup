@@ -1,0 +1,62 @@
+- name: Install SDKMAN for multiple SDKs
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - curl
+          - zip
+        state: present
+        update_cache: yes
+
+    - name: Download SDKMAN installation script
+      ansible.builtin.get_url:
+        url: https://get.sdkman.io
+        dest: /tmp/sdkman_install.sh
+        mode: '0755'
+
+    - name: Echo the current user
+      become: false
+      ansible.builtin.shell: whoami
+      register: current_user
+
+    - name: Display the current user
+      ansible.builtin.debug:
+        msg: "The current user is {{ current_user.stdout }}"
+
+    - name: Install SDKMAN
+      ansible.builtin.shell: bash /tmp/sdkman_install.sh
+      args:
+        creates: "/home/{{ current_user.stdout }}/.sdkman/bin/sdkman-init.sh"  
+      become_user: "{{ current_user.stdout }}"      
+
+    - name: Ensure SDKMAN is sourced in .bashrc
+      become: false
+      ansible.builtin.lineinfile:
+        path: "/home/{{ current_user.stdout }}/.bashrc"
+        line: "source /home/{{ current_user.stdout }}/.sdkman/bin/sdkman-init.sh"
+        create: yes
+
+    - name: Set permissions for SDKMAN directory
+      ansible.builtin.file:
+        path: "/home/{{ current_user.stdout }}/.sdkman"
+        state: directory
+        owner: "{{ current_user.stdout }}"
+        group: "{{ current_user.stdout }}"
+        mode: '0755'
+
+    - name: Set permissions for SDKMAN init script
+      ansible.builtin.file:
+        path: "/home/{{ current_user.stdout }}/.sdkman/bin/sdkman-init.sh"
+        state: file
+        owner: "{{ current_user.stdout }}"
+        group: "{{ current_user.stdout }}"
+        mode: '0755'
+
+    - name: Source SDKMAN for future tasks
+      become: false
+      ansible.builtin.shell: source /home/{{ current_user.stdout }}/.sdkman/bin/sdkman-init.sh
+      args:
+        executable: /bin/bash
+    

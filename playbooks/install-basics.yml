@@ -8,3 +8,7 @@
         name: curl
         state: present
         update_cache: yes
+    - name: Ensure wget is installed
+      ansible.builtin.apt:
+        name: wget
+        state: present

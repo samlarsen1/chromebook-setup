@@ -6,5 +6,3 @@ if ! command -v ansible >/dev/null 2>&1; then
 fi
 
 ansible --version | head -n 1
-
-
