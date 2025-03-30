@@ -22,10 +22,16 @@ The script currently can install:
 * Run `./setup.sh` which triggers ansible scripts for setup
 * Toggle environment variables to install different apps
 
+## Create a gcloud project
+
+```bash
+# authenticates to gcloud, sets up a test project and sets as local default project
+./setup-gcloud-project.sh
+```
+
 ## Adding specific SDKs
 
 See usage of sdkman at [sdkman.io](https://sdkman.io/usage)
-
 
 ```bash
 # list java versions
