@@ -9,19 +9,21 @@ fi
 # Now, call the Ansible playbooks
 ansible-playbook -i hosts ./playbooks/install-basics.yml
 
+# Define the playbooks associative array without commas
 declare -A playbooks=(
-    ["INSTALL_NPM"]="install-npm.yml"
-    ["INSTALL_VSCODE"]="install-vscode.yml"
-    ["INSTALL_SDKMAN"]="install-sdkman.yml"
-    ["INSTALL_INTELLIJ"]="install-intellij.yml"
-    ["INSTALL_PIP"]="install-pip.yml"
-    ["INSTALL_PYTHON3_10"]="install-python3.10.yml"
-    ["INSTALL_GCLOUD"]="install-gcloud.yml"
-    ["INSTALL_TERRAFORM"]="install-terraform.yml"
+    ["install-npm.yml"]="${INSTALL_NPM}"
+    ["install-vscode.yml"]="${INSTALL_VSCODE}"
+    ["install-sdkman.yml"]="${INSTALL_SDKMAN}"
+    ["install-intellij.yml"]="${INSTALL_INTELLIJ}"
+    ["install-pip.yml"]="${INSTALL_PIP}"
+    ["install-python3.10.yml"]="${INSTALL_PYTHON3_10}"
+    ["install-gcloud.yml"]="${INSTALL_GCLOUD}"
+    ["install-terraform.yml"]="${INSTALL_TERRAFORM}"
 )
 
+# Iterate over the playbooks array
 for var in "${!playbooks[@]}"; do
-    if [ "${!var}" = true ]; then
-        ansible-playbook -i hosts "./playbooks/${playbooks[$var]}"
+    if [ "${playbooks[$var]}" = "true" ]; then
+        ansible-playbook -i hosts "./playbooks/${var}"
     fi
 done
