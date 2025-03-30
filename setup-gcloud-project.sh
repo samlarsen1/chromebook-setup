@@ -26,4 +26,5 @@ echo "Project $PROJECT_ID created successfully."
 echo "Setting $PROJECT_ID as the default project..."
 gcloud config set project "$PROJECT_ID"
 
+
 echo "Default project set to $PROJECT_ID."

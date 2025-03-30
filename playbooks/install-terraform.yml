@@ -36,3 +36,27 @@
     - name: Display Terraform version
       ansible.builtin.debug:
         msg: "Terraform version: {{ terraform_version.stdout }}"
+
+    - name: Download TFLint binary
+      ansible.builtin.get_url:
+        url: https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip
+        dest: /tmp/tflint.zip
+
+    - name: Unzip TFLint binary
+      ansible.builtin.unarchive:
+        src: /tmp/tflint.zip
+        dest: /usr/local/bin/
+        remote_src: yes
+
+    - name: Ensure TFLint is executable
+      ansible.builtin.file:
+        path: /usr/local/bin/tflint
+        mode: '0755'
+
+    - name: Verify TFLint installation
+      ansible.builtin.command: tflint --version
+      register: tflint_version
+
+    - name: Display TFLint version
+      ansible.builtin.debug:
+        msg: "TFLint version: {{ tflint_version.stdout }}"
