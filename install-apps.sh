@@ -17,6 +17,7 @@ declare -A playbooks=(
     ["install-intellij.yml"]="${INSTALL_INTELLIJ}"
     ["install-pip.yml"]="${INSTALL_PIP}"
     ["install-python3.10.yml"]="${INSTALL_PYTHON3_10}"
+    ["install-python3.11.yml"]="${INSTALL_PYTHON3_11}"
     ["install-gcloud.yml"]="${INSTALL_GCLOUD}"
     ["install-terraform.yml"]="${INSTALL_TERRAFORM}"
 )

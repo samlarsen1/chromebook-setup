@@ -1,0 +1,67 @@
+- name: Install Python 3.11 from source
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install dependencies
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - libssl-dev
+          - zlib1g-dev
+          - libncurses5-dev
+          - libncursesw5-dev
+          - libreadline-dev
+          - libsqlite3-dev
+          - libgdbm-dev
+          - libdb5.3-dev
+          - libbz2-dev
+          - libexpat1-dev
+          - liblzma-dev
+          - tk-dev
+          - libffi-dev
+          - wget
+        state: present
+        update_cache: yes
+
+    - name: Download Python 3.11 source
+      ansible.builtin.get_url:
+        url: https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz
+        dest: /tmp/Python-3.11.0.tgz
+
+    - name: Extract Python 3.11 source
+      ansible.builtin.unarchive:
+        src: /tmp/Python-3.11.0.tgz
+        dest: /tmp
+        remote_src: yes
+
+    - name: Configure Python 3.11
+      ansible.builtin.shell: ./configure --enable-optimizations
+      args:
+        chdir: /tmp/Python-3.11.0
+
+    - name: Build and install Python 3.11
+      ansible.builtin.shell: make altinstall
+      args:
+        chdir: /tmp/Python-3.11.0
+
+    - name: Verify Python 3.11 installation
+      ansible.builtin.command: python3.11 --version
+      register: python_version
+
+    - name: Display Python 3.11 version
+      ansible.builtin.debug:
+        msg: "Python 3.11 version: {{ python_version.stdout }}"
+
+    - name: Install python3.11-venv
+      ansible.builtin.apt:
+        name: python3.11-venv
+        state: present
+
+    - name: Verify venv installation
+      ansible.builtin.command: python3.11 -m venv --help
+      register: venv_help
+
+    - name: Display venv installation status
+      ansible.builtin.debug:
+        msg: "Python 3.11 venv module is installed and working."
+      when: venv_help.rc == 0
