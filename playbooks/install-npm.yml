@@ -10,9 +10,8 @@
         update_cache: yes
 
     - name: Add NodeSource APT repository
-      ansible.builtin.shell: curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-      args:
-        warn: false
+      ansible.builtin.shell:
+        cmd: curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 
     - name: Install Node.js and npm
       ansible.builtin.apt:
@@ -35,3 +34,11 @@
     - name: Display npm version
       ansible.builtin.debug:
         msg: "npm version: {{ npm_version.stdout }}"
+
+    - name: Verify npx installation
+      ansible.builtin.command: npx -v
+      register: npx_version
+
+    - name: Display npx version
+      ansible.builtin.debug:
+        msg: "npx version: {{ npx_version.stdout }}"
