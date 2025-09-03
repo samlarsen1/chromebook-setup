@@ -12,3 +12,7 @@
       ansible.builtin.apt:
         name: wget
         state: present
+    - name: Ensure ansible-lint is installed
+      ansible.builtin.apt:
+        name: ansible-lint
+        state: present

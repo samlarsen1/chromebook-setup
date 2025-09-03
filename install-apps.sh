@@ -22,6 +22,8 @@ declare -A playbooks=(
     ["install-terraform.yml"]="${INSTALL_TERRAFORM}"
 )
 
+ansible-playbook -i hosts ./playbooks/install-basics.yml
+
 # Iterate over the playbooks array
 for var in "${!playbooks[@]}"; do
     if [ "${playbooks[$var]}" = "true" ]; then
