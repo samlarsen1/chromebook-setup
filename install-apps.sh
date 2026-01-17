@@ -20,6 +20,8 @@ declare -A playbooks=(
     ["install-python3.11.yml"]="${INSTALL_PYTHON3_11}"
     ["install-gcloud.yml"]="${INSTALL_GCLOUD}"
     ["install-terraform.yml"]="${INSTALL_TERRAFORM}"
+    ["install-docker.yml"]="${INSTALL_DOCKER}"
+    ["install-docker-compose.yml"]="${INSTALL_DOCKER_COMPOSE}"
 )
 
 ansible-playbook -i hosts ./playbooks/install-basics.yml

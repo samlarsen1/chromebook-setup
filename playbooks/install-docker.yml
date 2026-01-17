@@ -1,0 +1,57 @@
+- name: Install Docker Engine
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install prerequisite packages
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Create directory for apt keyrings
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Add Docker's official GPG key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+        force: true
+
+    - name: Add Docker repository to Apt sources
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb.codename }} stable"
+        state: present
+        filename: docker
+
+    - name: Install Docker packages
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Get the current user
+      become: false
+      ansible.builtin.command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: Add user to the docker group
+      ansible.builtin.user:
+        name: "{{ current_user.stdout }}"
+        groups: docker
+        append: yes
+
+    - name: Display message about Docker group membership
+      ansible.builtin.debug:
+        msg: "User {{ current_user.stdout }} has been added to the 'docker' group. Please log out and log back in for this change to take full effect."
