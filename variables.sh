@@ -12,6 +12,8 @@ echo "*** Environment Variables ***"
 echo "Variable: SETUP_KEY=$SETUP_KEY"
 echo "Variable: KEYNAME=$KEYNAME"
 echo "Variable: EMAIL=$EMAIL"
+echo "Variable: PROJECT_ID=$PROJECT_ID"
+
 # Loop over all environment variables
 for var in $(env); do
   # Check if the variable name starts with "INSTALL_"

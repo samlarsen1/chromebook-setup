@@ -1,20 +1,19 @@
 #!/bin/bash
 
-# Check if gcloud is installed
-if ! command -v gcloud &> /dev/null; then
-    echo "gcloud is not installed. Check installation in readme."
+# Check gcloud installation and authentication
+./gcloud-check.sh
+if [ $? -eq 1 ]; then
     exit 1
 fi
 
-# Authenticate with gcloud
-echo "gcloud is installed. Proceeding with authentication..."
-gcloud auth login
+# Set prefix from argument or default
+PREFIX="${1:-test-project}"
 
 # Generate a random number for the project suffix
 RANDOM_SUFFIX=$RANDOM
 
 # Define the project ID with prefix and random suffix
-PROJECT_ID="test-project-$RANDOM_SUFFIX"
+PROJECT_ID="${PREFIX}-$RANDOM_SUFFIX"
 
 # Create the project
 echo "Creating project with ID: $PROJECT_ID"
